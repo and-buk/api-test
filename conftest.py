@@ -8,6 +8,7 @@ from fixtures.common_models import UserStore
 from fixtures.magazine.model import Store, StoreResponse
 from fixtures.register.model import RegisterUser
 from fixtures.register.model import RegisterUserResponse
+from fixtures.store_item.model import Item, ItemResponse
 from fixtures.userInfo.model import AddUserInfo
 
 logger = logging.getLogger("api")
@@ -70,7 +71,7 @@ def user_info_(app, auth_user) -> UserStore:
 @pytest.fixture
 def store(app, user_info_) -> UserStore:
     """
-    Add new store
+    Add store
     """
     name_store = Store.random()
     res = app.operations_with_store.add_new_store(
@@ -82,3 +83,21 @@ def store(app, user_info_) -> UserStore:
     data_store.store = name_store
     data_store.store_uuid = res.data.uuid
     return data_store
+
+
+@pytest.fixture
+def item(app, store) -> UserStore:
+    """
+    Add item
+    """
+    data = Item.random(store.store_uuid)
+    res = app.operations_with_store_item.add_item(
+        name_item=data.name,
+        data=data,
+        header=store.header,
+        type_response=ItemResponse,
+    )
+    data_item = UserStore(**store.to_dict())
+    data_item.item = data.name
+    data_item.item_uuid_uuid = res.data.itemID
+    return data_item
