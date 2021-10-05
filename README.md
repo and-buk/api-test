@@ -1,0 +1,1 @@
+[![tests](https://github.com/and-buk/api-test/actions/workflows/tests.yml/badge.svg?branch=main)](https://github.com/and-buk/api-test/actions/workflows/tests.yml)
