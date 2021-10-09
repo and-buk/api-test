@@ -14,7 +14,9 @@ class StoreItem(Validator):
     GET_ITEM = "/item/{}"
 
     @log("Add new item")
-    def add_item(self, name_item: str, data: Item, header=None, type_response=None) -> Response:
+    def add_item(
+        self, name_item: str, data: Item, header=None, type_response=None
+    ) -> Response:
         """
         https://app.swaggerhub.com/apis-docs/berpress/flask-rest-api/1.0.0#/storeItem/itemAdd
         """
@@ -27,7 +29,9 @@ class StoreItem(Validator):
         return self.structure(response, type_response=type_response)
 
     @log("Change item")
-    def change_item(self, name_item: str, data: Item, header=None, type_response=None) -> Response:
+    def change_item(
+        self, name_item: str, data: Item, header=None, type_response=None
+    ) -> Response:
         """
         https://app.swaggerhub.com/apis-docs/berpress/flask-rest-api/1.0.0#/storeItem/itemChange
         """

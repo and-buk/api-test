@@ -4,11 +4,14 @@ import pytest
 
 from fixtures.app import Application
 from fixtures.auth.model import AuthUserResponse
+from fixtures.balance.model import Balance, BalanceResponse
 from fixtures.common_models import UserStore
-from fixtures.magazine.model import Store, StoreResponse
+from fixtures.magazine.model import Store
+from fixtures.magazine.model import StoreResponse
 from fixtures.register.model import RegisterUser
 from fixtures.register.model import RegisterUserResponse
-from fixtures.store_item.model import Item, ItemResponse
+from fixtures.store_item.model import Item
+from fixtures.store_item.model import ItemResponse
 from fixtures.userInfo.model import AddUserInfo
 
 logger = logging.getLogger("api")
@@ -90,7 +93,7 @@ def item(app, store) -> UserStore:
     """
     Add item
     """
-    data = Item.random(store.store_uuid)
+    data = Item.random(store_id=store.store_uuid)
     res = app.operations_with_store_item.add_item(
         name_item=data.name,
         data=data,
@@ -99,5 +102,28 @@ def item(app, store) -> UserStore:
     )
     data_item = UserStore(**store.to_dict())
     data_item.item = data.name
-    data_item.item_uuid_uuid = res.data.itemID
+    data_item.price = data.price
+    data_item.item_uuid = res.data.itemID
     return data_item
+
+
+@pytest.fixture
+def balance(app, item):
+    """
+    Add and set user balance
+    """
+    def _set_balance(set_amount=None) -> UserStore:
+        if set_amount is not None:
+            data = Balance.random(value=set_amount)
+        else:
+            data = Balance.random()
+        app.operations_with_user_balance.add_user_balance(
+            user_id=item.user_uuid,
+            data=data,
+            header=item.header,
+            type_response=BalanceResponse,
+        )
+        data_balance = UserStore(**item.to_dict())
+        data_balance.user_balance = data
+        return data_balance
+    return _set_balance

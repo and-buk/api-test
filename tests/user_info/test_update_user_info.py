@@ -7,9 +7,12 @@ class TestUserInfo:
     def test_update_user_info(self, app, user_info_):
         """
         Steps.
-            1. Try to login user with valid data
-            2. Check that status code is 200
-            3. Check response
+        1. Register new user
+        2. Access to store
+        3. Add user info
+        4. Try to update user info
+        5. Check that status code is 200
+        6. Check response
         """
         data = AddUserInfo.random()
         res = app.user_info.update_user_info(
@@ -20,3 +23,23 @@ class TestUserInfo:
         )
         assert res.status_code == 200
         assert res.data.message == ResponseText.MESSAGE_UPDATE_USER_INFO
+
+    def test_update_info_of_non_existent_user(self, app, user_info_):
+        """
+        Steps.
+        1. Register new user
+        2. Access to store
+        3. Add user info
+        4. Try to update info of non-existent user
+        5. Check that status code is 404
+        6. Check response
+        """
+        data = AddUserInfo.random()
+        res = app.user_info.update_user_info(
+            user_id=1000,
+            data=data,
+            header=user_info_.header,
+            type_response=MessageResponse,
+        )
+        assert res.status_code == 404
+        assert res.data.message == ResponseText.MESSAGE_INFO_NOT_FOUND_DOT

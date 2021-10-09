@@ -12,7 +12,9 @@ class StoreMagazine(Validator):
     GET_MAGAZINE = "/store/{}"
 
     @log("Add new store")
-    def add_new_store(self, name_store: str, header=None, type_response=None) -> Response:
+    def add_new_store(
+        self, name_store: str, header=None, type_response=None
+    ) -> Response:
         """
         https://app.swaggerhub.com/apis-docs/berpress/flask-rest-api/1.0.0#/storeMagazine/storeAdd
         """

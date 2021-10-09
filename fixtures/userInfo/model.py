@@ -33,8 +33,8 @@ class AddUserInfo(BaseClass):
 
 @attr.s
 class GetUserInfoResponse:
-    phone: str = attr.ib(default=None)
-    email: str = attr.ib(default=None)
-    userID: int = attr.ib(default=None)
-    street: str = attr.ib(default=None)
-    city: str = attr.ib(default=None)
+    phone: str = attr.ib(default=None, validator=attr.validators.instance_of(str))
+    email: str = attr.ib(default=None, validator=attr.validators.instance_of(str))
+    userID: int = attr.ib(default=None, validator=attr.validators.instance_of(int))
+    street: str = attr.ib(default=None, validator=attr.validators.instance_of(str))
+    city: str = attr.ib(default=None, validator=attr.validators.instance_of(str))

@@ -18,4 +18,4 @@ class Auth(BaseClass):
 
 @attr.s
 class AuthUserResponse:
-    access_token: str = attr.ib()
+    access_token: str = attr.ib(validator=attr.validators.instance_of(str))

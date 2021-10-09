@@ -20,6 +20,12 @@ class Store(BaseClass):
 
 @attr.s
 class StoreResponse:
-    name: str = attr.ib(default=None)
-    uuid: str = attr.ib(default=None)
-    items: List[str] = attr.ib(default=None)
+    name: str = attr.ib(default=None, validator=attr.validators.instance_of(str))
+    uuid: str = attr.ib(default=None, validator=attr.validators.instance_of(str))
+    items: List[str] = attr.ib(
+        default=None,
+        validator=attr.validators.deep_iterable(
+            member_validator=attr.validators.instance_of(str),
+            iterable_validator=attr.validators.instance_of(list),
+        ),
+    )

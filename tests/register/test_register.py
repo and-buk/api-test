@@ -30,3 +30,14 @@ class TestRegisterUser:
         res = app.register.register(data=data, type_response=MessageResponse)
         assert res.status_code == 400, "Check status code"
         assert res.data.message == ResponseText.MESSAGE_USER_PASSWORD_REQUIRED
+
+    def test_register_user_with_the_same_data(self, app):
+        """
+        1. Try to register user with the same valid data
+        2. Check that status code is 400
+        3. Check response
+        """
+        data = RegisterUser.random()
+        app.register.register(data=data, type_response=RegisterUserResponse)
+        res = app.register.register(data=data, type_response=RegisterUserResponse)
+        assert res.status_code == 400, "Check status code"

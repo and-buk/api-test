@@ -1,3 +1,5 @@
+from fixtures.common_models import MessageResponse
+from fixtures.constants import ResponseText
 from fixtures.magazine.model import StoreResponse
 
 
@@ -5,13 +7,36 @@ class TestStore:
     def test_get_store_info(self, app, store):
         """
         Steps.
-            1. Try to login user with valid data
-            2. Check that status code is 200
-            3. Check response
+            1. Register new user
+            2. Access to store with valid data
+            3. Add user info
+            4. Add store
+            5. Try to get info about created store
+            6. Check that status code is 200
+            7. Check response
         """
         res = app.operations_with_store.get_store(
             name_store=store.store,
             header=store.header,
             type_response=StoreResponse,
         )
-        assert res.status_code == 200
+        assert res.status_code == 200, "Check status code"
+
+    def test_get_info_about_non_existent_store(self, app, store):
+        """
+        Steps.
+            1. Register new user
+            2. Access to store with valid data
+            3. Add user info
+            4. Add store
+            5. Try to get info about non-existent store
+            6. Check that status code is 404
+            7. Check response
+        """
+        res = app.operations_with_store.get_store(
+            name_store=1000,
+            header=store.header,
+            type_response=MessageResponse,
+        )
+        assert res.status_code == 404, "Check status code"
+        assert res.data.message == ResponseText.MESSAGE_STORE_NOT_FOUND
