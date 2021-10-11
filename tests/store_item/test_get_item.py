@@ -1,9 +1,13 @@
+import pytest
+
 from fixtures.common_models import MessageResponse
 from fixtures.constants import ResponseText
 from fixtures.store_item.model import ItemResponse
 
 
 class TestStoreItem:
+
+    @pytest.mark.positive
     def test_get_item(self, app, item):
         """
         Steps.
@@ -23,6 +27,7 @@ class TestStoreItem:
         )
         assert res.status_code == 200
 
+    @pytest.mark.negative
     def test_get_info_about_non_existent_item(self, app, item):
         """
         Steps.
@@ -32,7 +37,7 @@ class TestStoreItem:
             4. Add store
             5. Add item
             6. Try to get info about non-existent item
-            7. Check that status code is 200
+            7. Check that status code is 404
             8. Check response
         """
         res = app.operations_with_store_item.get_item(

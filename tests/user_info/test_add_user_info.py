@@ -1,9 +1,13 @@
+import pytest
+
 from fixtures.common_models import MessageResponse, AuthInvalidResponse
 from fixtures.constants import ResponseText
 from fixtures.userInfo.model import AddUserInfo
 
 
 class TestUserInfo:
+
+    @pytest.mark.positive
     def test_add_user_info(self, app, auth_user):
         """
         Steps.
@@ -23,6 +27,7 @@ class TestUserInfo:
         assert res.status_code == 200, "Check status code"
         assert res.data.message == ResponseText.MESSAGE_ADD_USER_INFO
 
+    @pytest.mark.negative
     def test_add_info_of_non_existent_user(self, app, auth_user):
         """
         Steps.
@@ -42,6 +47,7 @@ class TestUserInfo:
         assert res.status_code == 404, "Check status code"
         assert res.data.message == ResponseText.MESSAGE_USER_NOT_FOUND
 
+    @pytest.mark.negative
     def test_add_already_existing_info_of_user(self, app, auth_user):
         """
         Steps.
@@ -68,6 +74,7 @@ class TestUserInfo:
         assert res.status_code == 400, "Check status code"
         assert res.data.message == ResponseText.MESSAGE_INFO_ALREADY_EXIST
 
+    @pytest.mark.negative
     def test_add_user_info_without_auth_header(self, app, auth_user):
         """
         Steps.

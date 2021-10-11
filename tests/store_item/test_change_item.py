@@ -1,8 +1,12 @@
+import pytest
+
 from fixtures.store_item.model import Item
 from fixtures.store_item.model import ItemResponse
 
 
 class TestStoreItem:
+
+    @pytest.mark.positive
     def test_change_item(self, app, item):
         """
         Steps.

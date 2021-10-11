@@ -1,9 +1,13 @@
+import pytest
+
 from fixtures.common_models import MessageResponse
 from fixtures.constants import ResponseText
 from fixtures.userInfo.model import AddUserInfo
 
 
 class TestUserInfo:
+
+    @pytest.mark.positive
     def test_update_user_info(self, app, user_info_):
         """
         Steps.
@@ -24,6 +28,7 @@ class TestUserInfo:
         assert res.status_code == 200
         assert res.data.message == ResponseText.MESSAGE_UPDATE_USER_INFO
 
+    @pytest.mark.negative
     def test_update_info_of_non_existent_user(self, app, user_info_):
         """
         Steps.

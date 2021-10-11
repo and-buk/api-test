@@ -1,3 +1,5 @@
+import pytest
+
 from fixtures.common_models import MessageResponse
 from fixtures.constants import ResponseText
 from fixtures.store_item.model import Item
@@ -5,6 +7,8 @@ from fixtures.store_item.model import ItemResponse
 
 
 class TestStoreItem:
+
+    @pytest.mark.positive
     def test_add_new_item(self, app, store):
         """
         Steps.
@@ -25,6 +29,7 @@ class TestStoreItem:
         )
         assert res.status_code == 201
 
+    @pytest.mark.negative
     def test_add_already_existing_item(self, app, store):
         """
         Steps.

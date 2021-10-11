@@ -7,6 +7,8 @@ from fixtures.register.model import RegisterUserResponse
 
 
 class TestRegisterUser:
+
+    @pytest.mark.positive
     def test_register_user_with_valid_data(self, app):
         """
         1. Try to register user with valid data
@@ -18,6 +20,7 @@ class TestRegisterUser:
         assert res.status_code == 201, "Check status code"
         assert res.data.message == ResponseText.MESSAGE_REGISTER_USER
 
+    @pytest.mark.negative
     @pytest.mark.parametrize("field", ["username", "password"])
     def test_register_user_with_empty_data(self, app, field):
         """
@@ -31,6 +34,7 @@ class TestRegisterUser:
         assert res.status_code == 400, "Check status code"
         assert res.data.message == ResponseText.MESSAGE_USER_PASSWORD_REQUIRED
 
+    @pytest.mark.negative
     def test_register_user_with_the_same_data(self, app):
         """
         1. Try to register user with the same valid data

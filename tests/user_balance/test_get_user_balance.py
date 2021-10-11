@@ -1,9 +1,13 @@
+import pytest
+
 from fixtures.balance.model import BalanceResponse
 from fixtures.common_models import MessageResponse
 from fixtures.constants import ResponseText
 
 
 class TestUserBalance:
+
+    @pytest.mark.positive
     def test_get_user_balance(self, app, balance):
         """
         Steps.
@@ -25,6 +29,7 @@ class TestUserBalance:
         )
         assert res.status_code == 200
 
+    @pytest.mark.negative
     def test_get_balance_of_non_existent_user(self, app, balance):
         """
         Steps.

@@ -1,3 +1,5 @@
+import pytest
+
 from fixtures.balance.model import Balance
 from fixtures.balance.model import BalanceResponse
 from fixtures.common_models import MessageResponse
@@ -5,6 +7,8 @@ from fixtures.constants import ResponseText
 
 
 class TestUserBalance:
+
+    @pytest.mark.positive
     def test_add_user_balance(self, app, store):
         """
         Steps.
@@ -25,6 +29,7 @@ class TestUserBalance:
         )
         assert res.status_code == 201
 
+    @pytest.mark.negative
     def test_add_balance_to_non_existent_user(self, app, store):
         """
         Steps.

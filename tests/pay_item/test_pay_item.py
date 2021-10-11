@@ -1,9 +1,13 @@
+import pytest
+
 from fixtures.common_models import MessageResponse
 from fixtures.constants import ResponseText
 from fixtures.pay.model import PayRequest, PayResponse
 
 
 class TestPayItem:
+
+    @pytest.mark.positive
     def test_pay_item(self, app, balance):
         """
         Steps.
@@ -27,6 +31,7 @@ class TestPayItem:
         )
         assert res.status_code == 200, "Check status code"
 
+    @pytest.mark.negative
     def test_pay_for_non_existetnt_item(self, app, balance):
         """
         Steps.
@@ -37,7 +42,7 @@ class TestPayItem:
             5. Add new item info
             6. Add user balance
             7. Try to pay for item
-            8. Check that status code is 200
+            8. Check that status code is 404
             9. Check response
         """
         fixture_data = balance()
@@ -51,7 +56,8 @@ class TestPayItem:
         assert res.status_code == 404, "Check status code"
         assert res.data.message == ResponseText.MESSAGE_ITEM_NOT_FOUND
 
-    def test_pay_for_item_by_non_existent_user(self, app, balance):
+    @pytest.mark.negative
+    def test_pay_for_item_with_no_money(self, app, balance):
         """
         Steps.
             1. Register new user
@@ -61,7 +67,7 @@ class TestPayItem:
             5. Add new item info
             6. Add user balance
             7. Try to pay for item
-            8. Check that status code is 200
+            8. Check that status code is 400
             9. Check response
         """
         fixture_data = balance(set_amount=0)

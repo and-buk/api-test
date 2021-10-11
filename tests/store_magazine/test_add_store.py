@@ -1,3 +1,5 @@
+import pytest
+
 from fixtures.common_models import MessageResponse
 from fixtures.constants import ResponseText
 from fixtures.magazine.model import Store
@@ -5,6 +7,8 @@ from fixtures.magazine.model import StoreResponse
 
 
 class TestStore:
+
+    @pytest.mark.positive
     def test_add_store(self, app, user_info_):
         """
         Steps.
@@ -23,6 +27,7 @@ class TestStore:
         )
         assert res.status_code == 201, "Check status code"
 
+    @pytest.mark.negative
     def test_add_already_existing_store(self, app, user_info_):
         """
         Steps.

@@ -1,9 +1,13 @@
+import pytest
+
 from fixtures.common_models import MessageResponse
 from fixtures.constants import ResponseText
 from fixtures.userInfo.model import GetUserInfoResponse
 
 
 class TestGetUserInfo:
+
+    @pytest.mark.positive
     def test_get_user_info(self, app, user_info_):
         """
         Steps.
@@ -24,6 +28,7 @@ class TestGetUserInfo:
         assert res.data.street == user_info_.user_info.address.street, "Check street"
         assert res.data.email == user_info_.user_info.email, "Check email"
 
+    @pytest.mark.negative
     def test_get_info_of_non_existent_user(self, app, user_info_):
         """
         Steps.

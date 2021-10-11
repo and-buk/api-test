@@ -1,8 +1,12 @@
+import pytest
+
 from fixtures.common_models import MessageResponse
 from fixtures.constants import ResponseText
 
 
 class TestGetUserInfo:
+
+    @pytest.mark.positive
     def test_delete_user_info(self, app, user_info_):
         """
         Steps.
@@ -21,6 +25,7 @@ class TestGetUserInfo:
         assert res.status_code == 200, "Check status code"
         assert res.data.message == ResponseText.MESSAGE_DELETE_USER_INFO
 
+    @pytest.mark.negative
     def test_delete_info_of_non_existent_user(self, app, user_info_):
         """
         Steps.
