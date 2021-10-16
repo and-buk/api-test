@@ -61,8 +61,7 @@ pytest -m negative
 ```
 pytest --alluredir=allure_reports
 ```
-
-### How to show generated report in browser
+Show generated report in browser:
 ```
 allure serve allure_reports
 ```
