@@ -1,3 +1,5 @@
+allure-pytest==2.9.44
+allure-python-commons==2.9.44
 atomicwrites==1.4.0
 attrs==21.2.0
 cattrs==1.8.0
@@ -24,4 +26,5 @@ scipy==1.7.1
 six==1.16.0
 text-unidecode==1.3
 toml==0.10.2
+typing-extensions==3.10.0.2
 urllib3==1.26.7
