@@ -24,7 +24,7 @@ By using Windows Terminal, Python and pip
 2. Create virtual environment
 ```
 py -m venv env
-source env\Scripts\activate
+env\Scripts\activate
 ```
 2. Activate created virtual environment  
 ```
