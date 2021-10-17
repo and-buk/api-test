@@ -24,11 +24,10 @@ By using Windows Terminal, Python and pip
 2. Create virtual environment
 ```
 py -m venv env
-env\Scripts\activate
 ```
 2. Activate created virtual environment  
 ```
-source env\Scripts\activate
+env\Scripts\activate
 ```
 3. Install project's dependencies  
 ```
